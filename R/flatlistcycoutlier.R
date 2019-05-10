@@ -1,0 +1,57 @@
+flatlist.cyc.outlier <- function(obj, nameofcol) { #function
+  obj %>%
+    group_by(file_id) %>% 
+    mutate(
+      d45.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),d45,NA),
+      d45.Aq.outlier = ifelse(!(!!sym(nameofcol)),d45,NA),
+      d46.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),d46,NA),
+      d46.Aq.outlier = ifelse(!(!!sym(nameofcol)),d46,NA),
+      d47.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),d47,NA),
+      d47.Aq.outlier = ifelse(!(!!sym(nameofcol)),d47,NA),
+      d48.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),d48,NA),
+      d48.Aq.outlier = ifelse(!(!!sym(nameofcol)),d48,NA),
+      d49.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),d49,NA),
+      d49.Aq.outlier = ifelse(!(!!sym(nameofcol)),d49,NA),
+      D47.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),D47full,NA),
+      D47full.Aq.outlier= ifelse(!(!!sym(nameofcol)),D47full,NA),
+      D48.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),D48full,NA),
+      D48full.Aq.outlier= ifelse(!(!!sym(nameofcol)),D48full,NA),
+      D49.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),D49full,NA),
+      D49full.Aq.outlier= ifelse(!(!!sym(nameofcol)),D49full,NA),
+      d13C.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),d13C,NA),
+      d13C.Aq.outlier =  ifelse(!(!!sym(nameofcol)),d13C,NA),
+      d18O.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),d18O,NA),
+      d18O.Aq.outlier = ifelse(!(!!sym(nameofcol)),d18O,NA),
+      PB.Aq.outlier= ifelse(!(!!sym(nameofcol)),PB,NA),
+      LeftPressure.Aq.outlier= ifelse(!(!!sym(nameofcol)),LeftPressure,NA),
+      RightPressure.Aq.outlier = ifelse(!(!!sym(nameofcol)),LeftPressure,NA)
+    ) %>% 
+    mutate(
+      d45.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),sd(d45.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d45.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(d45.Aq.outlier, na.rm=TRUE),NA),
+      d46.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),sd(d45.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d46.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(d45.Aq.outlier, na.rm=TRUE),NA),
+      d47.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),sd(d47.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d47.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(d47.Aq.outlier, na.rm=TRUE),NA),
+      d48.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),sd(d48.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d48.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(d48.Aq.outlier, na.rm=TRUE),NA),
+      d49.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),sd(d49.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d49.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(d49.Aq.outlier, na.rm=TRUE),NA),
+      D47.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),sd(D47.stdev.Aq.outlier, na.rm=TRUE),NA),
+      D47full.Aq.outlier= ifelse(!(!!sym(nameofcol)),mean(D47full.Aq.outlier, na.rm=TRUE),NA),
+      D48.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),sd(D48.stdev.Aq.outlier, na.rm=TRUE),NA),
+      D48full.Aq.outlier= ifelse(!(!!sym(nameofcol)),mean(D48full.Aq.outlier, na.rm=TRUE),NA),
+      D49.stdev.Aq.outlier = ifelse(!(!!sym(nameofcol)),sd(D49.stdev.Aq.outlier, na.rm=TRUE),NA),
+      D49full.Aq.outlier= ifelse(!(!!sym(nameofcol)),mean(D49full.Aq.outlier, na.rm=TRUE),NA),
+      d13C.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),sd(d13C.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d13C.Aq.outlier =  ifelse(!(!!sym(nameofcol)),mean(d13C.Aq.outlier, na.rm=TRUE),NA),
+      d18O.stdev.Aq.outlier= ifelse(!(!!sym(nameofcol)),sd(d18O.stdev.Aq.outlier, na.rm=TRUE),NA),
+      d18O.VPDB.min.Aq.outlier = ifelse(!(!!sym(nameofcol)),((((mean(d18O.stdev.Aq.outlier, na.rm=TRUE)-30.86)/1.03086)+1000)/1.00821)-1000,NA),
+      d18O.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(d18O.Aq.outlier, na.rm=TRUE),NA),
+      d18O.ref.Aq.outlier = ifelse(!(!!sym(nameofcol)),`ref d 18O/16O`[1],NA),
+      d13C.ref.Aq.outlier = ifelse(!(!!sym(nameofcol)),`ref d 13C/12C`[1],NA),
+      PB.Aq.outlier= ifelse(!(!!sym(nameofcol)),mean(PB.Aq.outlier, na.rm=TRUE),NA),
+      LeftPressure.Aq.outlier= ifelse(!(!!sym(nameofcol)),mean(LeftPressure.Aq.outlier, na.rm=TRUE),NA),
+      RightPressure.Aq.outlier = ifelse(!(!!sym(nameofcol)),mean(RightPressure.Aq.outlier, na.rm=TRUE),NA)
+    ) 
+}
