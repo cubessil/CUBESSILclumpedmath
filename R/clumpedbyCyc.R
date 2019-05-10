@@ -38,20 +38,20 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
     select(-mi) %>%
     # unnest all data again
     unnest(data)
-  
+
   isostandards <- did_files %>% iso_get_standards_info() %>% select(file_id, delta_name, delta_value) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
-  
+
   ref_pre <- filter(raw_data_w_measurement_info, type == "standard") %>%
     select(-type, -Analysis) %>%
     # prefix column names with pre
     { setNames(., str_c("pre_", names(.))) }
-  
+
   ref_post <- filter(raw_data_w_measurement_info, type == "standard") %>%
     select(-type, -Analysis) %>%
     # prefix column names with post
     { setNames(., str_c("post_", names(.))) }
-  
-  
+
+
   # now combine the samples with their respective pre and post cycle standards (i.e. to bracket them)
   combined_data <-
     raw_data_w_measurement_info %>%
@@ -92,12 +92,12 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
   combined_data <- correct_CO2_for_17O(combined_data,d45, d46)
   combined_data <- mutate(combined_data, d13C = d13.raw+`ref d 13C/12C`)#11.103
   combined_data <- mutate(combined_data, d18O = d18.raw+`ref d 18O/16O`)#35.775
-  
+
   R13VPDB <-	0.011237
   R18VSMOW <-	0.002005
   R17VSMOW <-	0.000380
   R47ZeroCO2 <-	4.65908E-05
-  
+
   combined_data <- combined_data %>% mutate(
     refR13 = ((`ref d 13C/12C`/1000)+1)*R13VPDB,
     refR18 = ((`ref d 18O/16O`/1000)+1)*R18VSMOW,
@@ -128,7 +128,7 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
     refmass12.18.18 = ref12C*ref18O*ref18O,
     refmass13.17.18 = ref13C*ref17O*ref18O*2,
     refmass13.18.18 = ref13C*ref18O*ref18O,
-    
+
     samplemass12.16.16 = sample12C*sample16O*sample16O,
     samplemass12.16.17 = sample12C*sample16O*sample17O*2,
     samplemass13.16.16 = sample13C*sample16O*sample16O,
@@ -148,45 +148,45 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
     ref47 = refmass12.17.18 + refmass13.16.18 + refmass13.17.17,
     ref48 = refmass12.18.18 + refmass13.17.18,
     ref49 = refmass13.18.18,
-    
+
     sample44 = samplemass12.16.16,
     sample45 = samplemass12.16.17 + samplemass13.16.16,
     sample46 = samplemass12.16.18 + samplemass12.17.17 + samplemass13.17.16,
     sample47 = samplemass12.17.18 + samplemass13.16.18 + samplemass13.17.17,
     sample48 = samplemass12.18.18 + samplemass13.17.18,
     sample49 = samplemass13.18.18,
-    
+
     refR45 = ref45/ref44,
     refR46 = ref46/ref44,
     refR47 = ref47/ref44,
     refR48 = ref48/ref44,
     refR49 = ref49/ref44,
-    
+
     sampleR45 = sample45/sample44,
     sampleR46 = sample46/sample44,
     sampleR47 = sample47/sample44,
     sampleR48 = sample48/sample44,
     sampleR49 = sample49/sample44,
-    
+
     # # gray box
     R45 = ((d45/1000)+1)*refR45,
     R46 = ((d46/1000)+1)*refR46,
     R47 = ((d47/1000)+1)*refR47,
     R48 = ((d48/1000)+1)*refR48,
     R49 = ((d49/1000)+1)*refR49,
-    
+
     # #Yellow box
     D45 = ((R45/sampleR45)-1)*1000,
     D46 = ((R46/sampleR46)-1)*1000,
     D47 = ((R47/sampleR47)-1)*1000,
     D48 = ((R48/sampleR48)-1)*1000,
     D49 = ((R49/sampleR49)-1)*1000,
-    
+
     D47full = D47-D46-D45,
     D48full = D48-D46-D46,
     D49full = D49-D46-D46-D45,
     runinfo ="",
-    Donotuse = FALSE) %>% 
+    Donotuse = FALSE) %>%
   group_by(file_id) %>% add_tally() %>%
     mutate(
       d45.stdev.Aq= sd(d45),
@@ -216,11 +216,11 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
       LeftPressure.Aq= mean(LeftPressure),
       RightPressure.Aq = mean(LeftPressure),
       numberofcyc = n
-    ) %>%    
-    ungroup %>% 
+    ) %>%
+    ungroup %>% arrange(Analysis) %>%
     mutate(
       new_sample =  Preparation != c("", head(Preparation, -1))  | `Identifier 1` != c("", head(`Identifier 1`,-1)),
       batch = cumsum(new_sample)) %>%
-    group_by(batch) %>% mutate(id = row_number()) %>% mutate(batch.Aq = n()/numberofcyc) 
-  
+    group_by(batch) %>% mutate(id = row_number()) %>% mutate(batch.Aq = n()/numberofcyc)
+
 }
