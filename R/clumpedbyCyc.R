@@ -217,10 +217,11 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
       RightPressure.Aq = mean(LeftPressure),
       numberofcyc = n
     ) %>%
-    ungroup %>% arrange(Analysis) %>%
+    ungroup %>% 
+    arrange(Analysis) %>%
     mutate(
       new_sample =  Preparation != c("", head(Preparation, -1))  | `Identifier 1` != c("", head(`Identifier 1`,-1)),
       batch = cumsum(new_sample)) %>%
-    group_by(batch) %>% mutate(id = row_number()) %>% mutate(batch.Aq = n()/numberofcyc)
+    group_by(batch) %>% mutate(id = row_number()) %>% mutate(num.Aq = n()/numberofcyc)
 
 }
