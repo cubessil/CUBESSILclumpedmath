@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 # Function perfoms a york regression on a dataset with x,y and errors in both x and y. Equations and regressions statistics following York et al, 2004.
 # Calculates the correlation coefficient of the errors (r) explicitly using the cor() function from the x errors and y errors.
-=======
 # Function perfoms a york regression on a dataset with x,y and errors in both x and y. Equations and regressions statistics following York et al, 2004. 
 # Calculates the correlation coefficient of the errors (r) explicitly using the cor() function from the x errors and y errors. 
 
@@ -14,7 +12,6 @@
 
 
 york.regression <- function (X, x.err, Y, y.err)
-=======
 york.regression <- function (X, x.err, Y, y.err) 
 
 {
@@ -55,7 +52,7 @@ york.regression <- function (X, x.err, Y, y.err)
   results <- data.frame(york.slope =york.slope, york.slope.err = york.slope.err, york.intercept = york.intercept, york.int.err= york.int.err, MSWD = MSWD, N = N, Cor.ab = Cab, error.corr = error.corr)
   return(results) #this returns the results df
 }
-=======
+
   MSWD <- sum(Wi * (Y - york.slope * X - york.intercept)^2)/(N - 
                                                                2)
   Cab <- -xbar * york.slope.err^2
