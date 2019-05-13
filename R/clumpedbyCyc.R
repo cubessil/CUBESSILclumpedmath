@@ -1,4 +1,4 @@
-clumpedbyCyc <- function (rawdata, lambda = 0.528){
+clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_18R = 0.00208835, lambda = 0.528, d_max = 1000){
   raw_data_w_measurement_info <-
     rawdata %>%
     # nest to run the operations on the measurement info only once for each file
@@ -89,7 +89,7 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
       PB = v44.mV - (pre_v44.mV+post_v44.mV)/2
     )
   combined_data <- left_join(combined_data,isostandards, "file_id")
-  combined_data <- correct_CO2_for_17O(combined_data,d45, d46)
+  combined_data <- correct_CO2_for_17O(combined_data,d45, d46, ref_17R, ref_13R, ref_18R, lambda, d_max)
   combined_data <- mutate(combined_data, d13C = d13.raw+`ref d 13C/12C`)#11.103
   combined_data <- mutate(combined_data, d18O = d18.raw+`ref d 18O/16O`)#35.775
 
@@ -217,7 +217,7 @@ clumpedbyCyc <- function (rawdata, lambda = 0.528){
       RightPressure.Aq = mean(LeftPressure),
       numberofcyc = n
     ) %>%
-    ungroup %>% 
+    ungroup %>%
     arrange(Analysis) %>%
     mutate(
       new_sample =  Preparation != c("", head(Preparation, -1))  | `Identifier 1` != c("", head(`Identifier 1`,-1)),
