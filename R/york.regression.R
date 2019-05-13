@@ -4,7 +4,7 @@
 =======
 # Function perfoms a york regression on a dataset with x,y and errors in both x and y. Equations and regressions statistics following York et al, 2004. 
 # Calculates the correlation coefficient of the errors (r) explicitly using the cor() function from the x errors and y errors. 
->>>>>>> 58cd9d644dd77a7cef027da8e313538d19a4a3af
+
 # For clumped 47 or 48 data, this will likely result in r values close to 1.
 # @param end.df.name is the name you want to give the output dataframe
 # @param X is the column of x values for the regression
@@ -12,11 +12,11 @@
 # @param Y is the column of y values for the regression
 # @param y.err is the column of standard errors of Y
 
-<<<<<<< HEAD
+
 york.regression <- function (X, x.err, Y, y.err)
 =======
 york.regression <- function (X, x.err, Y, y.err) 
->>>>>>> 58cd9d644dd77a7cef027da8e313538d19a4a3af
+
 {
   error.corr <- cor(x = x.err, y = y.err)
   wX <- 1/(x.err^2)
@@ -48,7 +48,7 @@ york.regression <- function (X, x.err, Y, y.err)
   york.slope.err <- sqrt(1/sum(Wi * ui^2))
   york.int.err <- sqrt(1/sum(Wi) + (sum(Wi * xi)/sum(Wi))^2 * york.slope.err^2)
   N <- length(X)
-<<<<<<< HEAD
+
   MSWD <- sum(Wi * (Y - york.slope * X - york.intercept)^2)/(N -
                                                                2)
   Cab <- -xbar * york.slope.err^2
@@ -62,4 +62,3 @@ york.regression <- function (X, x.err, Y, y.err)
   results <- data.frame(york.slope =york.slope, york.slope.err = york.slope.err, york.intercept = york.intercept, york.int.err= york.int.err, MSWD = MSWD, N = N, Cor.ab = Cab, error.corr = error.corr)
   return(results)
 }
->>>>>>> 58cd9d644dd77a7cef027da8e313538d19a4a3af
