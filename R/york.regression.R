@@ -46,15 +46,13 @@ york.regression <- function (X, x.err, Y, y.err)
   york.int.err <- sqrt(1/sum(Wi) + (sum(Wi * xi)/sum(Wi))^2 * york.slope.err^2)
   N <- length(X)
 
-  MSWD <- sum(Wi * (Y - york.slope * X - york.intercept)^2)/(N -
-                                                               2)
+  MSWD <- sum(Wi * (Y - york.slope * X - york.intercept)^2)/(N - 2)
   Cab <- -xbar * york.slope.err^2
   results <- data.frame(york.slope =york.slope, york.slope.err = york.slope.err, york.intercept = york.intercept, york.int.err= york.int.err, MSWD = MSWD, N = N, Cor.ab = Cab, error.corr = error.corr)
   return(results) #this returns the results df
 }
 
-  MSWD <- sum(Wi * (Y - york.slope * X - york.intercept)^2)/(N - 
-                                                               2)
+  MSWD <- sum(Wi * (Y - york.slope * X - york.intercept)^2)/(N - 2)
   Cab <- -xbar * york.slope.err^2
   results <- data.frame(york.slope =york.slope, york.slope.err = york.slope.err, york.intercept = york.intercept, york.int.err= york.int.err, MSWD = MSWD, N = N, Cor.ab = Cab, error.corr = error.corr)
   return(results)
