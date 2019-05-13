@@ -12,8 +12,6 @@
 
 
 york.regression <- function (X, x.err, Y, y.err)
-york.regression <- function (X, x.err, Y, y.err) 
-
 {
   error.corr <- cor(x = x.err, y = y.err)
   wX <- 1/(x.err^2)
