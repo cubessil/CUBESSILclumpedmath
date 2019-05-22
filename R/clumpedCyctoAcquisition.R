@@ -11,7 +11,7 @@ clumpedCyctoAcquisition<-  function(df) {
       mass=as.numeric(`Identifier 2`[1]),
       Preparation = Preparation[1],
       runinfo = runinfo [1],
-      Comment = Comment,
+      Comment = Comment[1],
       Donotuse = Donotuse[1],
       Yield = Yield[1],
       Method = Method[1],
