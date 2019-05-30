@@ -1,5 +1,5 @@
-change.donotuse.and.comment <- function(dataframe, lowerboundAnalysis, uperboundAnalysis, bool, datacomment){
-  dataframe[dataframe$Analysis >= lowerboundAnalysis & dataframe$Analysis <= uperboundAnalysis, "Donotuse"] <- bool
-  dataframe[dataframe$Analysis >= lowerboundAnalysis & dataframe$Analysis <= uperboundAnalysis, "runinfo"] <- datacomment
+change.donotuse.and.runinfo <- function(dataframe, lowerboundAnalysis, upperboundAnalysis, bool, datacomment){
+  dataframe[dataframe$Analysis >= lowerboundAnalysis & dataframe$Analysis <= upperboundAnalysis, "Donotuse"] <- bool
+  dataframe[dataframe$Analysis >= lowerboundAnalysis & dataframe$Analysis <= upperboundAnalysis, "runinfo"] <- datacomment
   return(dataframe)
 }
