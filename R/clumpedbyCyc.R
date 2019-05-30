@@ -223,6 +223,10 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
     mutate(
       new_sample =  Preparation != c("", head(Preparation, -1))  | `Identifier 1` != c("", head(`Identifier 1`,-1)),
       batch = cumsum(new_sample)) %>%
-    group_by(batch) %>% mutate(id = row_number()) %>% mutate(num.Aq = n()/numberofcyc)
+    group_by(batch) %>% 
+  mutate(id = row_number()) %>% 
+  mutate(num.Aq = n()/numberofcyc) %>%
+  ungroup %>%
+  select(batch, file_id, Analysis, file_datetime, `Identifier 1`, `Identifier 2`, Donotuse, runinfo, everything())
 
 }
