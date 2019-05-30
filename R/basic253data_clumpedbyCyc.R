@@ -47,6 +47,7 @@ basic253data_clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.
     left_join(ref_post, by = c("file_id" = "post_file_id", "post_ref" = "post_cycle")) %>%
     mutate(
       Analysis = parse_number(str_c(Analysis, ".", cycle)),
+      runinfo = "",
       Donotuse = FALSE,
       `var V 44.mV` = v44.mV,
       `var R sample 45CO2/44CO2` = (v45.mV/v44.mV),
@@ -170,9 +171,7 @@ basic253data_clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.
     
     D47full = D47-D46-D45,
     D48full = D48-D46-D46,
-    D49full = D49-D46-D46-D45,
-    runinfo ="",
-    Donotuse = FALSE) %>%
+    D49full = D49-D46-D46-D45) %>%
     
     group_by(file_id) %>% 
     add_tally() %>%
