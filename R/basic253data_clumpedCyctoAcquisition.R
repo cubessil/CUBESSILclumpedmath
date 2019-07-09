@@ -36,9 +36,7 @@ basic253data_clumpedCyctoAcquisition<-  function(df) {
       d18O = mean(d18O),
       d18O.ref = `ref d 18O/16O`[1],
       d13C.ref = `ref d 13C/12C`[1],
-      PB= mean(PB),
-      LeftPressure= mean(LeftPressure),
-      RightPressure = mean(LeftPressure)
+      PB= mean(PB)
     ) %>%
     mutate(
       new_sample =  `Identifier1` != c("", head(`Identifier1`,-1)), batch.Aq = cumsum(new_sample)
