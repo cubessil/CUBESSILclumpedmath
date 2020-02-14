@@ -39,7 +39,7 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
     # unnest all data again
     unnest(data)
 
-  isostandards <- did_files %>% iso_get_standards_info() %>% select(file_id, delta_name, delta_value) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
+  isostandards <- did_files %>% iso_get_standards() %>% select(file_id, delta_name, delta_value) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
 
   ref_pre <- filter(raw_data_w_measurement_info, type == "standard") %>%
     select(-type, -Analysis) %>%
@@ -223,8 +223,8 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
     mutate(
       new_sample =  Preparation != c("", head(Preparation, -1))  | `Identifier 1` != c("", head(`Identifier 1`,-1)),
       batch = cumsum(new_sample)) %>%
-    group_by(batch) %>% 
-  mutate(id = row_number()) %>% 
+    group_by(batch) %>%
+  mutate(id = row_number()) %>%
   mutate(num.Aq = n()/numberofcyc) %>%
   ungroup %>%
   select(batch, file_id, Analysis, file_datetime, `Identifier 1`, `Identifier 2`, Donotuse, runinfo, everything())
