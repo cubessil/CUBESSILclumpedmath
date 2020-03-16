@@ -9,7 +9,7 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
       mi = map(data, ~.x$measurement_info[[1]]),
       # pick the relevant entries in the measurement info
       mi_select = map(mi,
-                      ~data_frame(
+                      ~tibble(
                         Yield = pick_mi(.x, "left side"),
                         lp = pick_mi(.x, "l_p"),
                         rp = pick_mi(.x, "r_p"),
@@ -38,8 +38,6 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
     select(-mi) %>%
     # unnest all data again
     unnest(data)
-
-  isostandards <- did_files %>% iso_get_standards(select = c(file_id, delta_name, delta_value)) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
 
   ref_pre <- filter(raw_data_w_measurement_info, type == "standard") %>%
     select(-type, -Analysis) %>%
@@ -90,7 +88,7 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
       `d49` = ((r49o44/((pre_r49o44+post_r49o44)/2)-1)*1000),
       PB = v44.mV - (pre_v44.mV+post_v44.mV)/2
     )
-  combined_data <- left_join(combined_data,isostandards, "file_id")
+
   combined_data <- correct_CO2_for_17O(combined_data,d45, d46, ref_17R, ref_13R, ref_18R, lambda, d_max)
   combined_data <- mutate(combined_data, d13C = d13.raw+`ref d 13C/12C`)#11.103
   combined_data <- mutate(combined_data, d18O = d18.raw+`ref d 18O/16O`)#35.775
