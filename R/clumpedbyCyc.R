@@ -9,7 +9,7 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
       mi = map(data, ~.x$measurement_info[[1]]),
       # pick the relevant entries in the measurement info
       mi_select = map(mi,
-                      ~data_frame(
+                      ~tibble(
                         Yield = pick_mi(.x, "left side"),
                         lp = pick_mi(.x, "l_p"),
                         rp = pick_mi(.x, "r_p"),
@@ -39,7 +39,7 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
     # unnest all data again
     unnest(data)
 
-  isostandards <- did_files %>% iso_get_standards(select = c(file_id, delta_name, delta_value)) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
+  isostandards <- rawdata %>% select(file_id, delta_name, delta_value) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
 
   ref_pre <- filter(raw_data_w_measurement_info, type == "standard") %>%
     select(-type, -Analysis) %>%
