@@ -39,11 +39,6 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
     # unnest all data again
     unnest(data)
 
-<<<<<<< HEAD
-=======
-  isostandards <- rawdata %>% select(file_id, delta_name, delta_value) %>% mutate(delta_name = str_c("ref ", delta_name)) %>% spread(delta_name, delta_value)
-
->>>>>>> eed61281ffd5c865e8c936090065ea5f44f01b2b
   ref_pre <- filter(raw_data_w_measurement_info, type == "standard") %>%
     select(-type, -Analysis) %>%
     # prefix column names with pre
