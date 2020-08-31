@@ -1,4 +1,4 @@
-clumpedbyCyc_bulk <- function (rawdata, `refd13C/12C`, `refd18O/16O`, ref_17R = 0.000393, ref_13R = 0.011180, ref_18R = 0.00208835, lambda = 0.528, d_max = 1000){
+clumpedbyCyc_bulk <- function (rawdata, `ref d 13C/12C`, `ref d 18O/16O`, ref_17R = 0.000393, ref_13R = 0.011180, ref_18R = 0.00208835, lambda = 0.528, d_max = 1000){
   raw_data_w_measurement_info <-
     rawdata %>%
     # nest to run the operations on the measurement info only once for each file
@@ -90,8 +90,8 @@ clumpedbyCyc_bulk <- function (rawdata, `refd13C/12C`, `refd18O/16O`, ref_17R = 
     )
 
   combined_data <- correct_CO2_for_17O(combined_data,d45, d46, ref_17R, ref_13R, ref_18R, lambda, d_max)
-  combined_data <- mutate(combined_data, d13C = d13.raw+`refd13C/12C`)#11.103
-  combined_data <- mutate(combined_data, d18O = d18.raw+`refd18O/16O`)#35.775
+  combined_data <- mutate(combined_data, d13C = d13.raw+`ref d 13C/12C`)#11.103
+  combined_data <- mutate(combined_data, d18O = d18.raw+`ref d 18O/16O`)#35.775
 
   R13VPDB <-	0.01118
   R18VSMOW <-	0.00200520
