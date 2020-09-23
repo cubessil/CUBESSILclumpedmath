@@ -1,10 +1,13 @@
-clumpedbyCyc_bulk <- function (rawdata, `ref d 13C/12C`, `ref d 18O/16O`, ref_17R = 0.000393, ref_13R = 0.011180, ref_18R = 0.00208835, lambda = 0.528, d_max = 1000){
+clumpedbyCyc_bulk <- function (rawdata, `refd13C/12C`, `refd18O/16O`, ref_17R = 0.000393, ref_13R = 0.011180, ref_18R = 0.00208835, lambda = 0.528, d_max = 1000){
   raw_data_w_measurement_info <-
     rawdata %>%
     # nest to run the operations on the measurement info only once for each file
     nest(-file_id) %>%
     # find the relevant measurement info
     mutate(
+      `ref d 13C/12C`= `refd13C/12C`,
+      `ref d 18O/16O`= `refd18O/16O`,
+
       # pull out the measurement info from the nested data (the same for each raw data row so only need to look at 1)
       mi = map(data, ~.x$measurement_info[[1]]),
       # pick the relevant entries in the measurement info
