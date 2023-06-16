@@ -34,8 +34,8 @@ clumpedCyctoAcquisition<-  function(df) {
       d13C.stdev= sd(d13C),
       d13C =  mean(d13C),
       d18O.stdev= sd(d18O),
-      d18O.VPDB.min = ((((mean(d18O)-30.86)/1.03086)+1000)/1.00821)-1000,
-      #splitting VSMOW to VPDB convertion then acid fractionation correction 
+      d18O.VPDB.min = ((((mean(d18O)-30.92)/1.03092)+1000)/1.00813)-1000,
+      #VSMOW to VPDB conversion and acid fractionation correction, using Kim,Coplen, Horita GCA 2015 PDB to SMOW conversion and Kim et al., 2007 for calcite AD alpha at 90C 
       d18O = mean(d18O),
       d18O.ref = `ref d 18O/16O`[1],
       d13C.ref = `ref d 13C/12C`[1],
