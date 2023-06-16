@@ -207,7 +207,8 @@ clumpedbyCyc <- function (rawdata, ref_17R = 0.000393, ref_13R = 0.011180, ref_1
       d13C.stdev.Aq= sd(d13C),
       d13C.Aq =  mean(d13C),
       d18O.stdev.Aq= sd(d18O),
-      d18O.VPDB.min.Aq = ((((mean(d18O)-30.86)/1.03086)+1000)/1.00821)-1000,
+      d18O.VPDB.min.Aq = ((((mean(d18O)-30.92)/1.03092)+1000)/1.00813)-1000,
+      #VSMOW to VPDB conversion and acid fractionation correction, using Kim,Coplen, Horita GCA 2015 PDB to SMOW conversion and Kim et al., 2007 for calcite AD alpha at 90C
       d18O.Aq = mean(d18O),
       d18O.ref.Aq = `ref d 18O/16O`[1],
       d13C.ref.Aq = `ref d 13C/12C`[1],
